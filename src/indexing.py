@@ -1,4 +1,6 @@
 from collections import defaultdict, Counter
+import pickle
+from collections import defaultdict, Counter
 
 class InvertedIndex:
 
@@ -103,3 +105,14 @@ class InvertedIndex:
         """
 
         return set(self.doc_lengths.keys())
+
+    def save(self, filepath):
+        """Save the inverted index to a file."""
+        with open(filepath, "wb") as f:
+            pickle.dump(self, f)
+
+    @staticmethod
+    def load(filepath):
+        """Load an inverted index from a file."""
+        with open(filepath, "rb") as f:
+            return pickle.load(f)
