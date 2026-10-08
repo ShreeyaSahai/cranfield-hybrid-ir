@@ -11,6 +11,7 @@ venv/
 
 # Dataset generated files
 data/*.csv
+data/*.pkl
 
 # Python tooling
 .pytest_cache/
