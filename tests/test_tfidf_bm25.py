@@ -124,3 +124,13 @@ def test_invalid_b(retriever):
             index_api=retriever.index_api,
             b=1.5,
         )
+
+def test_results_sorted_by_score(retriever):
+    for search in [
+        retriever.tfidf_search,
+        retriever.bm25_search,
+    ]:
+        results = search("aerodynamic aircraft wings", top_k=3)
+        scores = [score for _, score in results]
+
+        assert scores == sorted(scores, reverse=True)
