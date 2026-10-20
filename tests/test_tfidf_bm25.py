@@ -96,3 +96,31 @@ def test_top_k_limit(retriever):
 def test_invalid_top_k(retriever):
     assert retriever.tfidf_search("aircraft", top_k=0) == []
     assert retriever.bm25_search("aircraft", top_k=0) == []
+
+
+def test_invalid_k1(retriever):
+    documents = pd.DataFrame([
+        {"doc_id": "1", "text": "aerodynamic aircraft wings"},
+    ])
+
+    with pytest.raises(ValueError):
+        LexicalRetriever(
+            documents=documents,
+            preprocessor=retriever.preprocessor,
+            index_api=retriever.index_api,
+            k1=0,
+        )
+
+
+def test_invalid_b(retriever):
+    documents = pd.DataFrame([
+        {"doc_id": "1", "text": "aerodynamic aircraft wings"},
+    ])
+
+    with pytest.raises(ValueError):
+        LexicalRetriever(
+            documents=documents,
+            preprocessor=retriever.preprocessor,
+            index_api=retriever.index_api,
+            b=1.5,
+        )
