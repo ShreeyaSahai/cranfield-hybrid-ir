@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1220" />
+  <title>Cranfield | Research Search</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script src="/script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Cranfield Search home">
+        <span class="brand-mark">C</span>
+        <span><strong>CRANFIELD</strong><small>HYBRID INFORMATION RETRIEVAL</small></span>
+      </a>
+      <div class="status"><span class="status-dot"></span><span id="connectionStatus">Connecting to search engine…</span></div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="eyebrow"><span class="eyebrow-line"></span> RESEARCH DISCOVERY WORKSPACE</div>
+        <h1>Find the research<br /><span>that moves you forward.</span></h1>
+        <p class="hero-copy">Search the Cranfield collection with lexical and semantic retrieval methods. Explore ranked documents and their relevance scores.</p>
+
+        <form id="searchForm" class="search-panel">
+          <label class="search-label" for="queryInput">YOUR RESEARCH QUERY</label>
+          <div class="search-input-row">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="queryInput" name="query" type="text" placeholder="e.g. aerodynamic characteristics of swept wings" autocomplete="off" required />
+            <button id="searchButton" type="submit"><span>Search collection</span><span aria-hidden="true">↗</span></button>
+          </div>
+          <div class="controls-row">
+            <div class="control-group">
+              <label for="methodSelect">RETRIEVAL METHOD</label>
+              <select id="methodSelect">
+                <option value="hybrid">Hybrid (RRF fusion)</option>
+                <option value="bm25">BM25</option>
+                <option value="tfidf">TF-IDF</option>
+                <option value="semantic">Semantic search</option>
+              </select>
+            </div>
+            <div class="control-group topk-control">
+              <label for="topKInput">RESULTS</label>
+              <select id="topKInput">
+                <option value="5">Top 5</option>
+                <option value="10" selected>Top 10</option>
+                <option value="20">Top 20</option>
+                <option value="50">Top 50</option>
+              </select>
+            </div>
+            <div class="method-note" id="methodNote">Combines BM25, TF-IDF and semantic rankings.</div>
+          </div>
+        </form>
+
+        <div class="suggestions">
+          <span>TRY A QUERY</span>
+          <button type="button" class="suggestion" data-query="boundary layer flow over a flat plate">Boundary layer flow</button>
+          <button type="button" class="suggestion" data-query="aerodynamic characteristics of aircraft wings">Aircraft aerodynamics</button>
+          <button type="button" class="suggestion" data-query="turbulent flow and heat transfer">Turbulent flow</button>
+        </div>
+      </section>
+
+      <section class="results-section" aria-live="polite">
+        <div class="results-heading">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> SEARCH OUTPUT</div>
+            <h2 id="resultsTitle">Ready when you are</h2>
+            <p id="resultsSubtitle">Enter a query to retrieve documents from the Cranfield collection.</p>
+          </div>
+          <div class="result-count" id="resultCount">— <span>documents</span></div>
+        </div>
+
+        <div id="messageBox" class="message-box hidden"></div>
+        <div id="loadingState" class="loading-state hidden">
+          <span class="spinner"></span>
+          <div><strong>Searching the collection</strong><p>Ranking documents with your selected retrieval method…</p></div>
+        </div>
+        <div id="resultsList" class="results-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-brand"><span class="brand-mark small">C</span> CRANFIELD IR</div>
+      <p>Research retrieval interface · Powered by the project’s existing Python search modules</p>
+    </footer>
+  </div>
+</body>
+</html>
