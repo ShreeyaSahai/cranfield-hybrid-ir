@@ -160,3 +160,39 @@ def test_documents_with_no_searchable_terms():
     )
 
     assert retriever.tfidf_search("aircraft") == []
+
+def test_retriever_with_real_inverted_index():
+    from src.indexing import InvertedIndex
+    from src.search_api import IndexAPI
+
+    
+    documents = pd.DataFrame([
+    {
+        "doc_id": "1",
+        "title": "Aerodynamic wings",
+        "author": "",
+        "bib": "",
+        "text": "aerodynamic aircraft wings",
+    },
+    {
+        "doc_id": "2",
+        "title": "Aircraft engine",
+        "author": "",
+        "bib": "",
+        "text": "aircraft engine design",
+    },
+])
+
+
+    preprocessor = TextPreprocessor()
+    index = InvertedIndex()
+    index.build(documents, preprocessor)
+
+    retriever = LexicalRetriever(
+        documents=documents,
+        preprocessor=preprocessor,
+        index_api=IndexAPI(index),
+    )
+
+    assert retriever.tfidf_search("aerodynamic wings")
+    assert retriever.bm25_search("aerodynamic wings")
