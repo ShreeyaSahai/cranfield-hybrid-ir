@@ -134,3 +134,12 @@ def test_results_sorted_by_score(retriever):
         scores = [score for _, score in results]
 
         assert scores == sorted(scores, reverse=True)
+
+def test_whitespace_query(retriever):
+    assert retriever.tfidf_search("   ") == []
+    assert retriever.bm25_search("   ") == []
+
+
+def test_negative_top_k(retriever):
+    assert retriever.tfidf_search("aircraft", top_k=-1) == []
+    assert retriever.bm25_search("aircraft", top_k=-1) == []
