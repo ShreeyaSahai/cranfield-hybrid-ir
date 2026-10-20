@@ -143,3 +143,20 @@ def test_whitespace_query(retriever):
 def test_negative_top_k(retriever):
     assert retriever.tfidf_search("aircraft", top_k=-1) == []
     assert retriever.bm25_search("aircraft", top_k=-1) == []
+
+def test_documents_with_no_searchable_terms():
+    documents = pd.DataFrame([
+        {"doc_id": "1", "text": "the and is"},
+        {"doc_id": "2", "text": "a an the"},
+    ])
+
+    preprocessor = TextPreprocessor()
+    api = FakeIndexAPI(documents, preprocessor)
+
+    retriever = LexicalRetriever(
+        documents=documents,
+        preprocessor=preprocessor,
+        index_api=api,
+    )
+
+    assert retriever.tfidf_search("aircraft") == []

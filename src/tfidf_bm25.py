@@ -96,9 +96,15 @@ class LexicalRetriever:
             lowercase=False,
         )
 
-        self.tfidf_matrix = self.vectorizer.fit_transform(
+        
+        if any(self.processed_documents):
+            self.tfidf_matrix = self.vectorizer.fit_transform(
             self.processed_documents
         )
+        else:
+          self.vectorizer = None
+          self.tfidf_matrix = None
+
 
         self.avg_doc_length = self._calculate_average_length()
 
@@ -129,6 +135,9 @@ class LexicalRetriever:
         if not processed_query or not self.doc_ids:
             return []
 
+        
+        if self.vectorizer is None:
+         return []
         query_vector = self.vectorizer.transform([processed_query])
         scores = cosine_similarity(
             query_vector, self.tfidf_matrix
