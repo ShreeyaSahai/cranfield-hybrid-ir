@@ -19,3 +19,5 @@ data/*.pkl
 # OS
 .DS_Store
 Thumbs.db
+
+evaluation_results/precision_recall_curve.csv
